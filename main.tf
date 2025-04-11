@@ -1,17 +1,17 @@
 provider "aws" {
-  region     = "us-east-1"
-  access_key = "test"
-  secret_key = "test"
+  region     = var.region
+  access_key = var.access_key
+  secret_key = var.secret_key
 
   endpoints {
-    ec2 = "https://localhost.localstack.cloud:4566"
-    sts = "https://localhost.localstack.cloud:4566"
+    sts = var.sts_endpoint
+    ec2 = var.ec2_endpoint
   }
 }
 
 resource "aws_key_pair" "default" {
   key_name   = "vpn-key"
-  public_key = file("~/.ssh/id_ed25519.pub")
+  public_key = file(var.public_key_path)
 }
 
 resource "aws_security_group" "vpn_sg" {
@@ -19,8 +19,8 @@ resource "aws_security_group" "vpn_sg" {
   description = "Security group for VPN"
   # vpc_id      = aws_vpc.default.id
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = var.ssh_port
+    to_port     = var.ssh_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -39,8 +39,8 @@ resource "aws_security_group" "vpn_sg" {
 }
 
 resource "aws_instance" "vpn" {
-  ami             = "ami-0c02fb55956c7d316"
-  instance_type   = "t2.micro"
+  ami             = var.ami
+  instance_type   = var.instance_type
   key_name        = aws_key_pair.default.key_name
   security_groups = [aws_security_group.vpn_sg.name]
 
