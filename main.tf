@@ -56,6 +56,8 @@ resource "aws_instance" "vpn" {
   key_name        = aws_key_pair.default.key_name
   security_groups = [aws_security_group.vpn_sg.name]
 
+  user_data = templatefile("${path.module}/templates/init.tpl", {})
+
   tags = {
     Name = "VPN-Server"
   }
