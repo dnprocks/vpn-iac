@@ -40,5 +40,12 @@ variable "public_key_path" {
 
 variable "ssh_port" {
   description = "The port for SSH access"
+  type        = number
   default     = 22
+}
+
+variable "wireguard_port" {
+  description = "The port for SSH access"
+  type        = number
+  default     = 51820
 }
