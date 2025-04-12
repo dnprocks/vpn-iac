@@ -38,6 +38,11 @@ variable "public_key_path" {
   default     = "~/.ssh/id_ed25519.pub"
 }
 
+variable "private_key_path" {
+  description = "The path to the private key file"
+  default     = "~/.ssh/id_ed25519"
+}
+
 variable "ssh_port" {
   description = "The port for SSH access"
   type        = number

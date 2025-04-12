@@ -5,7 +5,7 @@ output "instance_public_ip" {
 }
 
 output "instance_ssh_command" {
-  value = "ssh -i ~/.ssh/id_rsa ubuntu@${aws_instance.vpn.public_ip}"
+  value = "ssh -i ${var.private_key_path} ubuntu@${aws_instance.vpn.public_ip}"
 }
 
 output "instance_private_ip" {
